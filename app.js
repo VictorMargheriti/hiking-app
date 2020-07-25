@@ -161,6 +161,7 @@ function isLoggedIn(req, res, next){
 	res.redirect("/login")
 }
 
-app.listen(300, function(){
-	console.log("Chikkin's Hiking server hosted at port 300")
-})
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
