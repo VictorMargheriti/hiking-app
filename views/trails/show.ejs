@@ -15,7 +15,18 @@
 				<div class="caption-full">
 					<h4 class="pull-right">$9.00/night</h4>
 					<h4><a><%= trail.name %></a></h4>
-					<p><%=trail.description%></p>
+					<p><%= trail.description %></p>
+					<p>
+						<em>Submitted by <strong><%= trail.author.username %></strong></em>
+					</p>
+					<% if(currentUser && trail.author.id.equals(currentUser._id)){ %>
+						<a class="btn btn-warning" href="/trails/<%= trail._id %>/edit">Edit</a>
+						<form class="delete-form" action="/trails/<%= trail._id %>?_method=DELETE" method="POST">
+							<button class="btn btn-danger">
+								Delete
+							</button>
+						</form>
+					<% } %>
 				</div>
 			</div>
 			<div class="well">
@@ -25,9 +36,15 @@
 				<% trail.comments.forEach(function(comment){ %>
 				<div class="row">
 					<div class="col-md-12">
-						<strong><%= comment.author %></strong>
+						<strong><%= comment.author.username %></strong>
 						<span class="pull-right">10 days ago</span>
 						<p><%= comment.text %></p>
+						<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+						<a class="btn btn-xs btn-warning" href="/trails/<%= trail._id%>/comments/<%=comment._id%>/edit">Edit</a>
+						<form class="delete-form" action="/trails/<%=trail._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+							<input type="submit" class="btn btn-xs btn-danger" value="Delete">
+						</form>
+						<% } %>
 					</div>
 				</div>
 				<% }) %>

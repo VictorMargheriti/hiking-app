@@ -8,17 +8,19 @@ const express   			= require("express"),
 	User 					= require("./models/user"),
 	passport 				= require("passport"),
 	LocalStrategy 			= require("passport-local"),
-	passportLocalMongoose 	= require("passport-local-mongoose")
+	passportLocalMongoose 	= require("passport-local-mongoose"),
+	methodOverride 			= require("method-override")
 
 const commentRoutes = require("./routes/comments"),
 	  trailRoutes = require("./routes/trails"),
 	  indexRoutes = require("./routes/index")
     
-mongoose.connect("mongodb://localhost/hiking_app", {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true  });
+mongoose.connect("mongodb://localhost/hiking_app", {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true});
+app.use(methodOverride("_method"))
 app.use(bodyParser.urlencoded({extended: true}))
 app.set("view engine", "ejs")
 app.use(express.static(__dirname + "/public"));
-seedDB()
+// seedDB()
 
 //PASSPORT CONFIG
 app.use(require("express-session")({
