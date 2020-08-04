@@ -29,7 +29,7 @@ res.render("register");
 
 //show login form
 router.get("/login", function(req, res){
-	res.render("login")
+	res.render("login", {message: req.flash("error")})
 })
 
 //handle login logic
@@ -45,11 +45,5 @@ router.get("/logout", function(req, res){
 	res.redirect("/trails");
 });
 
-function isLoggedIn(req, res, next){
-	if(req.isAuthenticated()){
-		return next()
-	}
-	res.redirect("/login")
-}
 
 module.exports = router;

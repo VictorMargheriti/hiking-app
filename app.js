@@ -2,6 +2,7 @@ const express   			= require("express"),
     app         			= express(),
     bodyParser  			= require("body-parser"),
     mongoose    			= require("mongoose"),
+	flash 					= require("connect-flash"),
 	Trail					= require("./models/trail"),
     seedDB      			= require("./seeds"),
 	Comment 				= require("./models/comment"),
@@ -16,10 +17,11 @@ const commentRoutes = require("./routes/comments"),
 	  indexRoutes = require("./routes/index")
     
 mongoose.connect("mongodb://localhost/hiking_app", {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true});
-app.use(methodOverride("_method"))
-app.use(bodyParser.urlencoded({extended: true}))
-app.set("view engine", "ejs")
+app.use(methodOverride("_method"));
+app.use(bodyParser.urlencoded({extended: true}));
+app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(flash());
 // seedDB()
 
 //PASSPORT CONFIG
