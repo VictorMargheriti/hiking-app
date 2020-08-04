@@ -28,20 +28,23 @@ res.render("register");
 })
 
 //show login form
-router.get("/login", function(req, res){
-	res.render("login", {message: req.flash("error")})
-})
+router.get("/login", (req, res)=> {
+    res.render("login", {referer:req.headers.referer});
+});
 
 //handle login logic
-router.post("/login", passport.authenticate("local", {
-	successRedirect: "/trails",
-	failureRedirect: "/login"
-}), function(req, res){
+router.post("/login", passport.authenticate("local", {failureRedirect: "/login"}), (req, res) => {
+    if (req.body.referer && (req.body.referer !== undefined && req.body.referer.slice(-6) !== "/login")) {
+        res.redirect(req.body.referer);
+    } else {
+        res.redirect("/");
+    }
 });
 
 // logout route
-router.get("/logout", function(req, res){
+router.get("/logout", (req, res)=> {
 	req.logout();
+	req.flash("error", "You have been logged out.");
 	res.redirect("/trails");
 });
 
