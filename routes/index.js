@@ -44,7 +44,7 @@ router.post("/login", passport.authenticate("local", {failureRedirect: "/login"}
 // logout route
 router.get("/logout", (req, res)=> {
 	req.logout();
-	req.flash("error", "You have been logged out.");
+	req.flash("success", "You have been logged out.");
 	res.redirect("/trails");
 });
 
