@@ -18,9 +18,11 @@ res.render("register");
     User.register(newUser, req.body.password, function(err, user){
         if (err){
             console.log(err);
+			req.flash("error", err.message)
             return res.render("register");
         } else {
             passport.authenticate("local")(req, res, function(){
+				req.flash("success", "Welcome to Chikkin's app " + user.username)
                 res.redirect("/trails");
             })
         }
@@ -47,6 +49,5 @@ router.get("/logout", (req, res)=> {
 	req.flash("success", "You have been logged out.");
 	res.redirect("/trails");
 });
-
 
 module.exports = router;

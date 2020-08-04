@@ -24,6 +24,7 @@ router.post("/trails/:id/comments", middleware.isLoggedIn, function(req, res){
 			//create new comments
 			Comment.create(req.body.comment, function(err, comment){
 				if(err){
+					req.flash("error", "Something went wrong.")
 					console.log(err)
 				} else {
 					//add username and id to comment
@@ -36,6 +37,7 @@ router.post("/trails/:id/comments", middleware.isLoggedIn, function(req, res){
 					//connect new comment to trail
 					trail.save()
 					//redirect trail show page
+					req.flash("success", "Comment successfully added.")
 					res.redirect("/trails/" + trail._id)
 				}
 			})
@@ -58,6 +60,7 @@ router.put("/trails/:id/comments/:comment_id", middleware.checkCommentOwnership,
 		if(err){
 			res.redirect("back")
 		} else {
+			req.flash("success", "Comment edited")
 			res.redirect("/trails/" + req.params.id )
 		}
 	})
@@ -68,6 +71,7 @@ router.delete("/trails/:id/comments/:comment_id", middleware.checkCommentOwnersh
 		if(err){
 			res.redirect("back")
 		} else {
+			req.flash("success", "Comment deleted")
 			res.redirect("back")
 		}
 	})
