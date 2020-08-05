@@ -70,6 +70,7 @@ router.delete("/trails/:id", middleware.checkTrailOwnership, function(req, res){
 		if(err){
 			res.redirect("/trails")
 		} else {
+			req.flash("success", "Successfully deleted Trail")
 			res.redirect("/trails")
 		}
 	})
