@@ -15,13 +15,14 @@ router.get("/trails", function(req, res){
 
 router.post("/Trails", middleware.isLoggedIn, function(req, res){
     const name = req.body.name;
+	const price = req.body.price;
     const image = req.body.image;
     const desc = req.body.description;
 	const author = {
 		id: req.user._id,
 		username: req.user.username
 	}
-    const newTrail = {name: name, image: image, description: desc, author: author}
+    const newTrail = {name: name, price: price, image: image, description: desc, author: author}
     Trail.create(newTrail, function(err, newlyCreated){
         if(err){
             console.log(err);
